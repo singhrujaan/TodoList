@@ -9,15 +9,18 @@ import {
   persistStore,
 } from 'redux-persist'
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from "react-router-dom";
 
 let persistor = persistStore(store)
 ReactDOM.render(
   <React.StrictMode>
+     <BrowserRouter>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <App />
       </PersistGate>
     </Provider>
+     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

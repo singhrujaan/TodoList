@@ -6,7 +6,7 @@ import {  useDispatch } from 'react-redux';
 import {
   add,
 } from './TodoSlice';
-const ModalComponent = ({IsOpen,setIsOpen,input,title}) => {
+const ModalComponent = ({setLoading,IsOpen,setIsOpen,input,title}) => {
     
   
   const dispatch = useDispatch();
@@ -17,6 +17,11 @@ const ModalComponent = ({IsOpen,setIsOpen,input,title}) => {
   const yesSubmitHandler = ()=>{
     dispatch(add(input));
     closeModal();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      
+    }, 100000000000);
   }
   const customStyles = {
     content: {
@@ -33,16 +38,17 @@ const ModalComponent = ({IsOpen,setIsOpen,input,title}) => {
   return (
     <div>
       <Modal 
+      ariaHideApp={false}
        isOpen={IsOpen}
         onRequestClose={closeModal}
         style={customStyles}>
       <div style={{display:'flex'}}>
-        <h1 >Are you sure you want to add an item?</h1>
-        <span>X</span>
+        <h2 >Are you sure you want to add an item?</h2>
+        <span onClick={closeModal} style={{cursor:'pointer'}}>X</span>
       </div>
-      <div style={{display:'flex'}}> 
-          <button onClick={yesSubmitHandler}>yes</button>
-          <button onClick={closeModal}>no</button>
+      <div style={{display:'flex',justifyContent:'space-around'}}> 
+          <button onClick={yesSubmitHandler} style={{paddingInline:'20px',paddingBlock:'5px',fontSize:'18px'}}>yes</button>
+          <button onClick={closeModal} style={{paddingInline:'20px',paddingBlock:'5px',fontSize:'18px'}}>no</button>
       </div>
 
     </Modal>
