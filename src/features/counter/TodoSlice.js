@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   value: [],
-  isModalOpen:false
+  isModalOpen:false,
+  checked:0
 };
 
 
@@ -35,6 +36,9 @@ export const TodoSlice = createSlice({
       state.isModalOpen= false;
     },
 
+    checkCount:(state,action)=>{
+      
+    }
     // edit: (state, action) => {
     //   state.value += action.payload;
     // },
