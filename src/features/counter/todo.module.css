@@ -1,0 +1,9 @@
+input{
+    /* padding: 5px 30px; */
+    border-radius: 10px;
+    margin-right:10px;
+    /* margin:10px 10px; */
+}
+input.placeholder {
+    text-align: center;
+}
