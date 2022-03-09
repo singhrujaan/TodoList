@@ -1,27 +1,27 @@
 
-
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
 import {  useDispatch } from 'react-redux';
+import {toastmsg} from './ToastSlice';
 import {
   add,
 } from './TodoSlice';
-const ModalComponent = ({setLoading,IsOpen,setIsOpen,input,title}) => {
+const ModalComponent = ({clearlist,setLoading,IsOpen,setIsOpen,input,setInput,title,closeModal}) => {
     
   
   const dispatch = useDispatch();
 
-  const closeModal=()=> {
-    setIsOpen(false);
-  }
+  
   const yesSubmitHandler = ()=>{
     dispatch(add(input));
     closeModal();
     setLoading(true);
+    dispatch(toastmsg('item added successfully'))
+    clearlist();
     setTimeout(() => {
       setLoading(false);
       
-    }, 100000000000);
+    }, 4000);
   }
   const customStyles = {
     content: {
@@ -47,7 +47,7 @@ const ModalComponent = ({setLoading,IsOpen,setIsOpen,input,title}) => {
         <span onClick={closeModal} style={{cursor:'pointer'}}>X</span>
       </div>
       <div style={{display:'flex',justifyContent:'space-around'}}> 
-          <button onClick={yesSubmitHandler} style={{paddingInline:'20px',paddingBlock:'5px',fontSize:'18px'}}>yes</button>
+          <button onClick={yesSubmitHandler} style={{paddingInline:'20px',paddingBlock:'5px',fontSize:'18px'}} >yes</button>
           <button onClick={closeModal} style={{paddingInline:'20px',paddingBlock:'5px',fontSize:'18px'}}>no</button>
       </div>
 

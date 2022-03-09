@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { useEffect } from 'react';
 
 const initialState = {
   value: [],
   isModalOpen:false,
-  checked:0
+  checked:0,
 };
 
 
@@ -16,7 +15,6 @@ export const TodoSlice = createSlice({
     add: (state,action) => {
       console.log("state",state.value)
       state.value = [...state.value,action.payload];
-        // localStorage.setItem('item',JSON.stringify(state.value));
     },
 
     del: (state,action) => {
@@ -27,6 +25,7 @@ export const TodoSlice = createSlice({
     })
     },
     
+
 
     modalOpen:(state)=>{
       state.isModalOpen= true;

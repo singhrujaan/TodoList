@@ -1,13 +1,15 @@
 
 import { useDispatch, useSelector } from "react-redux"
 import {del} from './TodoSlice';
+import {toastmsg} from './ToastSlice';
   import { MdDelete } from 'react-icons/md';
 import{AiOutlineEdit} from 'react-icons/ai'
 import ModalComponent from "./ModalComponent";
 import {  Link } from "react-router-dom";
-import { useState,useEffect } from "react";
-const List = ({IsOpen,setIsOpen}) => {
+import { useState } from "react";
+const List = ({IsOpen,setIsOpen,setLoading}) => {
     const value = useSelector((state)=>state.todo.value);
+    console.log("value1",value)
     const dispatch = useDispatch();
     const [totalSelectedCheckboxes, setTotalSelectedCheckboxes] = useState(0);
   //  const deleteHandler=(index)=>{
@@ -15,7 +17,13 @@ const List = ({IsOpen,setIsOpen}) => {
   //  }
    const openModal=(index)=> {
     // setIsOpen(true);
-    dispatch(del(index))
+    setLoading(true);
+    dispatch(del(index));
+    dispatch(toastmsg('deleted succesfully'))
+    setTimeout(() => {
+      setLoading(false);
+      
+    }, 4000);
   }
 
    const current = new Date();
@@ -62,5 +70,5 @@ console.log(totalSelectedCheckboxes);
     </div>
   )
 }
-
+ 
 export default List
