@@ -10,10 +10,6 @@ export const ToastSlice = createSlice({
   name: 'toast',
   initialState,
   reducers: {
-    // add: (state,action) => {
-    //   console.log("state",state.value)
-    //   state.value = [...state.value,action.payload];
-    // },
 
     toastmsg:(state,action)=>{
         state.message = action.payload;

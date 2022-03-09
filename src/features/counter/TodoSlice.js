@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: [],
+  value: [{name:"",checked:false}],
   isModalOpen:false,
-  checked:0,
 };
 
 
@@ -13,8 +12,13 @@ export const TodoSlice = createSlice({
   initialState,
   reducers: {
     add: (state,action) => {
-      console.log("state",state.value)
-      state.value = [...state.value,action.payload];
+      // console.log("state1",state.value,action.payload)
+      // state.value = [...state.value,action.payload];
+      const newTodo = {
+        name:action.payload.name,
+        checked: false
+      }
+      state.value.push(newTodo)
     },
 
     del: (state,action) => {
@@ -35,16 +39,14 @@ export const TodoSlice = createSlice({
       state.isModalOpen= false;
     },
 
-    checkCount:(state,action)=>{
-      
-    }
+  
     // edit: (state, action) => {
     //   state.value += action.payload;
     // },
   },
 });
 
-export const { add, del, incrementByAmount } = TodoSlice.actions;
+export const { add, del, incrementByAmount} = TodoSlice.actions;
 
 
 

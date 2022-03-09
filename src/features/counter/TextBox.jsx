@@ -1,21 +1,23 @@
 import React from 'react'
 import styles from './todo.module.css';
 import { IoIosAddCircleOutline } from 'react-icons/io';
-import {  useDispatch } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { useRef ,forwardRef } from 'react';
 import {
     add,
   } from './TodoSlice';
 
+
 const TextBox = forwardRef(({openModal,setInput,input},ref) => {
   // console.log("input",inputRef.current.value)
-
+ const value = useSelector((state)=>state.todo.value);
     const dispatch = useDispatch();
     const _handleKeyDown=(e)=> {
         if (e.key === 'Enter') {
-            dispatch(add(input));  
+            dispatch(add({name:input}));  
             clearInput();   // inputRef.target.value="";
         
+
         }
 
     }
