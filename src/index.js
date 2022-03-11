@@ -12,6 +12,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
 
 let persistor = persistStore(store)
+console.log("root",store)
 ReactDOM.render(
   <React.StrictMode>
      <BrowserRouter>
