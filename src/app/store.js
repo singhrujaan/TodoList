@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import todoReducer from '../features/counter/TodoSlice';
+import toastReducer from '../features/counter/ToastSlice'
+import completedReducer from '../features/counter/CompletedSlice'
 import {
-  persistStore,
   persistReducer,
   FLUSH,
   REHYDRATE,
@@ -15,7 +16,8 @@ import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
   todo: todoReducer,
-
+  toast: toastReducer,
+  completed:completedReducer
 });
 const persistConfig = {
   key: 'root',

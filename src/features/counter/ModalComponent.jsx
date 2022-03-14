@@ -1,27 +1,36 @@
 
 
-import React, { useState } from 'react';
-import Modal from 'react-modal';
+import React from 'react';
 import {  useDispatch } from 'react-redux';
+import Modal from 'react-modal';
+import {toastmsg} from './ToastSlice';
 import {
-  add,
+  add,edit
 } from './TodoSlice';
-const ModalComponent = ({setLoading,IsOpen,setIsOpen,input,title}) => {
+const ModalComponent = ({clearlist,setLoading,IsOpen,setIsOpen,input,setInput,closeModal,editIndex}) => {
     
   
   const dispatch = useDispatch();
 
-  const closeModal=()=> {
-    setIsOpen(false);
-  }
+ 
+
+  
+
   const yesSubmitHandler = ()=>{
-    dispatch(add(input));
+
+    if (editIndex) 
+      {dispatch(edit({index:editIndex,input:input}))}
+    else
+       {dispatch(add(input));}
+    
     closeModal();
     setLoading(true);
+    dispatch(toastmsg('item added successfully'));
+    clearlist();
     setTimeout(() => {
       setLoading(false);
       
-    }, 100000000000);
+    }, 4000);
   }
   const customStyles = {
     content: {

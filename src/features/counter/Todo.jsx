@@ -1,68 +1,101 @@
-import React,{ useState } from "react"
-import styles from './todo.module.css';
-import {  useDispatch } from 'react-redux';
-import {
-  add,
-} from './TodoSlice';
+import React, { useState,useRef  } from "react";
+import { useSelector} from "react-redux";
 import List from "./List";
-import { IoIosAddCircleOutline } from 'react-icons/io';
 import ModalComponent from "./ModalComponent";
 import TextBox from "./TextBox";
 import Popup from "./Popup";
 
-
 const Todo = () => {
-    const [input, setInput] = useState("");
-    const [IsOpen, setIsOpen] = useState(false);
-    const [Loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-    // const [totalSelectedCheckboxes, setTotalSelectedCheckboxes] = useState(0);
+  const [input, setInput] = useState("");
 
+  const [IsOpen, setIsOpen] = useState(false);
+  const [Loading, setLoading] = useState(false);
+  const [editIndex, setEditIndex] = useState();
+  // const check = useSelector((state) => state.checked.value);
+  const value = useSelector((state) => state.todo.value);
+  const ref = useRef();
+  const openModal = () => {
+    input.length < 1 ? alert("field required") : setIsOpen(true);
+  };
+
+  const noOfChecked = (checked) => {
+    return checked;
+  };
+  const editInput = (index) => {
+    setInput(value[index]);
+    console.log("index", index);
+    setEditIndex(index);
+  };
+  const clearInput=()=>{
+        
+    // console.log( "ref1",inputRef.current.value);
+    ref.current.value="";
     
-   
-    const openModal=()=> {
-       (input.length<1)?
-        alert('field required')
-      :
-      setIsOpen(true);
+  }
+  const closeModal=()=> {
+    setIsOpen(false);
+  }
 
-     
-    }
-
-
-    const noOfChecked=(checked)=>{
-      return(checked)
-    }
+  // const completedItems =  useSelector((state) => 
+  //             state.completed.checkedContainer.filter((complete)=>complete=== true));
 
   return (
-    
-      <div  className="container" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',borderRadius:'5px',height:'100vh',width:'100vw',backgroundColor:'black'}}>
-        <div style={{color:'white'}}>
-             
+    <div
+      className="container"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "5px",
+        width: "100vw",
+      }}
+    >
+      <div style={{ color: "white" }}>
+        <div
+          style={{
+            display: "flex",
+            backgroundColor: "green",
+            borderRadius: "10px",
+            position: "fixed",
+          }}
+        >
 
-              <div style={{display:"flex",backgroundColor:'white',borderRadius:'10px'}}>
-                <TextBox input={input} setInput={setInput} openModal={openModal}/>
-                </div>
+          {/* <div>{completedItems}</div> */}
 
-                <div>
-                <ModalComponent Loading={Loading}  setLoading={setLoading} IsOpen={IsOpen} setIsOpen={setIsOpen} input={input}/>
-                </div>
-
-                <List 
-                // totalSelectedCheckboxes={totalSelectedCheckboxes} setTotalSelectedCheckboxes={setTotalSelectedCheckboxes}
-                noOfChecked={noOfChecked}
-                />
+          <TextBox ref={ref} input={input} setInput={setInput} openModal={openModal} />
         </div>
-        
-        {Loading===true && 
-        <div >
-          <Popup sucess="item added successfully"  setLoading={setLoading} />
-        </div>}
 
+        <div>
+          <ModalComponent
+          clearlist={()=>clearInput()} 
+          closeModal={closeModal}
+            setEditIndex={setEditIndex}
+            editIndex={editIndex}
+            Loading={Loading}
+            setLoading={setLoading}
+            IsOpen={IsOpen}
+            setIsOpen={setIsOpen}
+            input={input}
+            setIsInput={setInput}
+          />
+        </div>
+
+        <List
+          editInput={(index) => editInput(index)}
+          noOfChecked={noOfChecked}
+          setLoading={setLoading}
+          setIsOpen={setIsOpen}
+        />
+      </div>
+
+      {Loading === true && (
+        <div>
+          <Popup setLoading={setLoading} closeModal={closeModal} />
+        </div>
+      )}
     </div>
-    
-    
-  )
-}
+  );
+};
 
-export default Todo
+export default Todo;
